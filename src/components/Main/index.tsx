@@ -3,6 +3,8 @@ import React from "react";
 
 import * as S from "./styles";
 
+const data = () => {};
+
 const Main = ({ description = "CRA, TypeScript e Styled Components" }) => (
   <S.Wrapper>
     <S.Logo
