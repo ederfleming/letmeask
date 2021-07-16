@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 export function App() {
   return (
@@ -12,5 +12,5 @@ export function App() {
         </Route>
       </Switch>
     </Router>
-  );
+  )
 }
