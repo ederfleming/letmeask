@@ -89,7 +89,7 @@ export const Separator = styled.div`
     margin-left: 16px;
   }
 `
-export const CreateButton = styled.button`
+export const GoogleButton = styled.button`
   margin-top: 64px;
   height: 50px;
   border-radius: 8px;

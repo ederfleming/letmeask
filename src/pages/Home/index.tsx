@@ -1,3 +1,5 @@
+import Button from 'components/Button'
+
 import * as S from './styles'
 
 const Home = () => (
@@ -10,14 +12,14 @@ const Home = () => (
     <S.Main>
       <S.MainContent>
         <S.Logo src="/img/logo.svg" alt="Let me ask" />
-        <S.CreateButton>
+        <S.GoogleButton>
           <img src="/img/google-icon.svg" alt="Logo do google" />
           Crie sua sala com o Google
-        </S.CreateButton>
+        </S.GoogleButton>
         <S.Separator>ou entre em uma sala</S.Separator>
         <S.Form>
           <input type="text" placeholder="Digite o código da sala" />
-          <button type="submit">Entrar na sala</button>
+          <Button type="submit">Entrar na sala</Button>
         </S.Form>
       </S.MainContent>
     </S.Main>
