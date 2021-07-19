@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import Button from 'components/Button'
 
 import * as S from './styles'
@@ -18,7 +20,7 @@ const NewRoom = () => (
           <Button type="submit">Criar sala</Button>
         </S.Form>
         <p>
-          Quer entrar em uma sala existente? <a href="#">Clique aqui</a>
+          Quer entrar em uma sala existente? <Link to="/">Clique aqui</Link>
         </p>
       </S.MainContent>
     </S.Main>
