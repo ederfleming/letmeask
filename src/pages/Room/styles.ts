@@ -36,6 +36,7 @@ export const RoomTitle = styled.div`
   span {
     margin-left: 16px;
     background: #e559f9;
+    color: #fff;
     border-radius: 16px;
     padding: 8px 16px;
     font-weight: 500;
@@ -71,5 +72,22 @@ export const SendQuestion = styled.span`
     color: #835afd;
     font-size: 14px;
     cursor: pointer;
+  }
+`
+export const QuestionAuthor = styled.div`
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  span {
+    margin-left: 8px;
+    color: #29292e;
+    font-weight: 500;
+    font-size: 14px;
   }
 `
