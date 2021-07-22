@@ -9,23 +9,59 @@ import RoomCode from 'components/RoomCode'
 
 import * as S from './styles'
 
+type FirebaseQuestions = Record<
+  string,
+  {
+    author: { name: string; avatar: string }
+    content: string
+    isAnswered: boolean
+    isHighlighted: boolean
+  }
+>
+
 type RoomParams = {
   id: string
 }
+
+type Question = {
+  id: string
+  author: { name: string; avatar: string }
+  content: string
+  isAnswered: boolean
+  isHighlighted: boolean
+}
+
 const Room = () => {
   const { user } = useAuth()
   const params = useParams<RoomParams>()
   const [newQuestion, setNewQuestion] = useState('')
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [title, setTitle] = useState('')
 
   const roomId = params.id
 
-  // useEffect(() => {
-  //   const roomRef = database.ref(`room/${roomId}`)
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${roomId}`)
 
-  //   roomRef.once('value', (room) => {
-  //     const parsedQuestions = Object.entries
-  //   })
-  // }, [roomId])
+    roomRef.once('value', (room) => {
+      const databaseRoom = room.val()
+      const firebaseQuestions = databaseRoom.questions as FirebaseQuestions
+
+      const parsedQuestions = Object.entries(firebaseQuestions).map(
+        ([key, value]) => {
+          return {
+            id: key,
+            content: value.content,
+            author: value.author,
+            isHighlighted: value.isHighlighted,
+            isAnswered: value.isAnswered
+          }
+        }
+      )
+      setTitle(databaseRoom.title)
+      setQuestions(parsedQuestions)
+    })
+  }, [roomId, questions])
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -62,10 +98,14 @@ const Room = () => {
       </S.Header>
       <S.Main>
         <S.RoomTitle>
-          <h1>Nome da sala</h1>
-          <span>4 perguntas</span>
+          <h1>Sala {title}</h1>
+          {questions.length && (
+            <span>
+              {questions.length}{' '}
+              {questions.length == 1 ? 'pergunta' : 'perguntas'}
+            </span>
+          )}
         </S.RoomTitle>
-
         <S.RoomForm onSubmit={handleSendQuestion}>
           <textarea
             placeholder="O que você quer perguntar?"
