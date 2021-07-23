@@ -1,67 +1,27 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useAuth } from 'hooks/useAuth'
+import { useRoom } from 'hooks/useRoom'
 import { database } from 'services/firebase'
 
 import Button from 'components/Button'
+import QuestionComponent from 'components/Question'
 import RoomCode from 'components/RoomCode'
 
 import * as S from './styles'
 
-type FirebaseQuestions = Record<
-  string,
-  {
-    author: { name: string; avatar: string }
-    content: string
-    isAnswered: boolean
-    isHighlighted: boolean
-  }
->
-
 type RoomParams = {
   id: string
-}
-
-type Question = {
-  id: string
-  author: { name: string; avatar: string }
-  content: string
-  isAnswered: boolean
-  isHighlighted: boolean
 }
 
 const Room = () => {
   const { user } = useAuth()
   const params = useParams<RoomParams>()
   const [newQuestion, setNewQuestion] = useState('')
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [title, setTitle] = useState('')
 
   const roomId = params.id
-
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`)
-
-    roomRef.once('value', (room) => {
-      const databaseRoom = room.val()
-      const firebaseQuestions = databaseRoom.questions as FirebaseQuestions
-
-      const parsedQuestions = Object.entries(firebaseQuestions).map(
-        ([key, value]) => {
-          return {
-            id: key,
-            content: value.content,
-            author: value.author,
-            isHighlighted: value.isHighlighted,
-            isAnswered: value.isAnswered
-          }
-        }
-      )
-      setTitle(databaseRoom.title)
-      setQuestions(parsedQuestions)
-    })
-  }, [roomId, questions])
+  const { questions, title } = useRoom(roomId)
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()
@@ -128,6 +88,15 @@ const Room = () => {
               Enviar pergunta
             </Button>
           </S.FormFooter>
+          <S.QuestionList>
+            {questions.map((question) => (
+              <QuestionComponent
+                key={question.id}
+                content={question.content}
+                author={question.author}
+              />
+            ))}
+          </S.QuestionList>
         </S.RoomForm>
       </S.Main>
     </S.Wrapper>
