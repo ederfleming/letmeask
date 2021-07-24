@@ -37,8 +37,3 @@ export const QuestionAuthor = styled.div`
     font-size: 14px;
   }
 `
-export const QuestionsButton = styled.button`
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-`

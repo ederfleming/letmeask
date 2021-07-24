@@ -18,7 +18,7 @@ const QuestionComponent = ({ content, author, children }: QuestionProps) => (
         <img src={author.avatar} alt="Author name" />
         <span>{author.name}</span>
       </S.QuestionAuthor>
-      <S.QuestionsButton>{children}</S.QuestionsButton>
+      <div>{children}</div>
     </S.QuestionFooter>
   </S.Wrapper>
 )

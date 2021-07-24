@@ -93,5 +93,9 @@ export const QuestionAuthor = styled.div`
 `
 export const QuestionList = styled.div`
   margin-top: 32px;
+  button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
 `
-export const LikeButton = styled.div``

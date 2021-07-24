@@ -1,9 +1,7 @@
-import { FormEvent, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useAuth } from 'hooks/useAuth'
 import { useRoom } from 'hooks/useRoom'
-import { database } from 'services/firebase'
 
 import Button from 'components/Button'
 import QuestionComponent from 'components/Question'
@@ -18,35 +16,9 @@ type RoomParams = {
 const AdminRoom = () => {
   const { user } = useAuth()
   const params = useParams<RoomParams>()
-  const [newQuestion, setNewQuestion] = useState('')
 
   const roomId = params.id
   const { questions, title } = useRoom(roomId)
-
-  async function handleSendQuestion(event: FormEvent) {
-    event.preventDefault()
-    if (newQuestion.trim() === '') {
-      return
-    }
-
-    if (!user) {
-      throw new Error('You must be logged in')
-    }
-
-    const question = {
-      content: newQuestion,
-      author: {
-        name: user.name,
-        avatar: user.avatar
-      },
-      isHighlighted: false,
-      isAnswred: false
-    }
-
-    await database.ref(`rooms/${roomId}/questions`).push(question)
-
-    setNewQuestion('')
-  }
 
   return (
     <S.Wrapper>
