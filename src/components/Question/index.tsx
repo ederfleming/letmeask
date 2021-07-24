@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import * as S from './styles'
 
 type QuestionProps = {
@@ -6,8 +8,9 @@ type QuestionProps = {
     name: string
     avatar: string
   }
+  children?: ReactNode
 }
-const QuestionComponent = ({ content, author }: QuestionProps) => (
+const QuestionComponent = ({ content, author, children }: QuestionProps) => (
   <S.Wrapper>
     <p>{content}</p>
     <S.QuestionFooter>
@@ -15,7 +18,7 @@ const QuestionComponent = ({ content, author }: QuestionProps) => (
         <img src={author.avatar} alt="Author name" />
         <span>{author.name}</span>
       </S.QuestionAuthor>
-      <div></div>
+      <S.QuestionsButton>{children}</S.QuestionsButton>
     </S.QuestionFooter>
   </S.Wrapper>
 )
