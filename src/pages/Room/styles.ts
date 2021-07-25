@@ -99,3 +99,15 @@ export const QuestionList = styled.div`
     cursor: pointer;
   }
 `
+export const OptionsButtons = styled.div`
+  button {
+    display: flex;
+    align-items: flex-end;
+    color: #737380;
+    gap: 8px;
+  }
+  svg {
+    width: 24px;
+    color: #835afd;
+  }
+`
