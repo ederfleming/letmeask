@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
+import { Trash } from '@styled-icons/boxicons-regular'
 import { useAuth } from 'hooks/useAuth'
 import { useRoom } from 'hooks/useRoom'
+import { database } from 'services/firebase'
 
 import Button from 'components/Button'
 import QuestionComponent from 'components/Question'
@@ -15,10 +17,25 @@ type RoomParams = {
 
 const AdminRoom = () => {
   const { user } = useAuth()
+  const history = useHistory()
   const params = useParams<RoomParams>()
 
   const roomId = params.id
   const { questions, title } = useRoom(roomId)
+
+  async function handleEndRoom() {
+    await database.ref(`rooms/${roomId}`).update({
+      closedAt: new Date()
+    })
+
+    history.push('/')
+  }
+
+  async function handleDeleteQuestion(questionId: string) {
+    if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
+    }
+  }
 
   return (
     <S.Wrapper>
@@ -27,7 +44,9 @@ const AdminRoom = () => {
           <img src="/img/logo.svg" alt="Logo Letmeask" />
           <S.IdentificationRoom>
             <RoomCode code={roomId} />
-            <Button isOutlined>Encerar Sala</Button>
+            <Button isOutlined onClick={handleEndRoom}>
+              Encerar Sala
+            </Button>
           </S.IdentificationRoom>
         </S.HeaderContent>
       </S.Header>
@@ -48,7 +67,16 @@ const AdminRoom = () => {
               key={question.id}
               content={question.content}
               author={question.author}
-            />
+            >
+              <S.OptionsButtons>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteQuestion(question.id)}
+                >
+                  <Trash />
+                </button>
+              </S.OptionsButtons>
+            </QuestionComponent>
           ))}
         </S.QuestionList>
       </S.Main>

@@ -103,3 +103,17 @@ export const QuestionAuthor = styled.div`
 export const QuestionList = styled.div`
   margin-top: 32px;
 `
+export const OptionsButtons = styled.div`
+  button {
+    display: flex;
+    align-items: flex-end;
+    color: #737380;
+    gap: 8px;
+    background: transparent;
+    border: 0;
+  }
+  svg {
+    width: 24px;
+    color: #835afd;
+  }
+`
