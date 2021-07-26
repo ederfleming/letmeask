@@ -104,6 +104,8 @@ export const QuestionList = styled.div`
   margin-top: 32px;
 `
 export const OptionsButtons = styled.div`
+  display: flex;
+  gap: 16px;
   button {
     display: flex;
     align-items: flex-end;
@@ -111,6 +113,7 @@ export const OptionsButtons = styled.div`
     gap: 8px;
     background: transparent;
     border: 0;
+    cursor: pointer;
   }
   svg {
     width: 24px;

@@ -1,6 +1,10 @@
 import { useHistory, useParams } from 'react-router-dom'
 
-import { Trash } from '@styled-icons/boxicons-regular'
+import { Trash, MessageAltCheck, Message } from '@styled-icons/boxicons-regular'
+import {
+  MessageAltCheck as Checked,
+  MessageAlt
+} from '@styled-icons/boxicons-solid'
 import { useAuth } from 'hooks/useAuth'
 import { useRoom } from 'hooks/useRoom'
 import { database } from 'services/firebase'
@@ -37,6 +41,18 @@ const AdminRoom = () => {
     }
   }
 
+  async function handleCheckQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true
+    })
+  }
+
+  async function handleHighlightQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighlighted: true
+    })
+  }
+
   return (
     <S.Wrapper>
       <S.Header>
@@ -69,6 +85,18 @@ const AdminRoom = () => {
               author={question.author}
             >
               <S.OptionsButtons>
+                <button
+                  type="button"
+                  onClick={() => handleCheckQuestion(question.id)}
+                >
+                  {question.isAnswered ? <Checked /> : <MessageAltCheck />}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleHighlightQuestion(question.id)}
+                >
+                  {question.isHighlighted ? <MessageAlt /> : <Message />}
+                </button>
                 <button
                   type="button"
                   onClick={() => handleDeleteQuestion(question.id)}
