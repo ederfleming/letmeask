@@ -13,6 +13,13 @@ export const Wrapper = styled.div`
   p {
     color: #29292e;
   }
+
+  &:hover {
+    background: #f4f0ff;
+    border: 1px solid #835afd;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
 `
 
 export const QuestionFooter = styled.footer`
